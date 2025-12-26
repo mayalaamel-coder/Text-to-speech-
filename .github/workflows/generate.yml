@@ -1,0 +1,27 @@
+name: Generate Podcast Audio
+on: [push] # Otomatis jalan setiap kali kamu klik 'Commit'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install TTS Engine
+        run: pip install edge-tts
+
+      - name: Run Audio Generator
+        run: python main.py
+
+      - name: Simpan Hasil Audio
+        uses: actions/upload-artifact@v3
+        with:
+          name: hasil-podcast-mp3
+          path: podcast_output/
+          
